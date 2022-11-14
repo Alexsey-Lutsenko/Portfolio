@@ -1,4 +1,24 @@
 "use strict";
+// Проверка устройства
+if (navigator.userAgent.match(/iPad/i)) {
+	//code for iPad here
+}
+
+if (navigator.userAgent.match(/iPhone/i)) {
+	//code for iPhone here
+}
+
+if (navigator.userAgent.match(/Android/i)) {
+	//code for Android here
+}
+
+if (navigator.userAgent.match(/BlackBerry/i)) {
+	//code for BlackBerry here
+}
+
+if (navigator.userAgent.match(/webOS/i)) {
+	//code for webOS here
+}
 
 // Прокрутка при клике
 
