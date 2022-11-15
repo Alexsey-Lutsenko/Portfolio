@@ -1,27 +1,36 @@
 "use strict";
 // Проверка устройства
-if (navigator.userAgent.match(/iPad/i)) {
-	//code for iPad here
+const isMobile = {
+	Android: () => navigator.userAgent.match(/Android/i),
+	BlackBerry: () => navigator.userAgent.match(/BlackBerry/i),
+	iOS: () => navigator.userAgent.match(/iPhone|iPad|iPod/i),
+	Opera: () => navigator.userAgent.match(/Opera Mini/i),
+	Windows: () => navigator.userAgent.match(/IEMobile/i),
+
+	any: () => {
+		return isMobile.Android() || isMobile.BlackBerry() || isMobile.Opera() || isMobile.Windows() || isMobile.iOS();
+	},
+};
+
+if (isMobile.any()) {
+	document.body.classList.add("_touch");
+} else {
+	document.body.classList.add("_pc");
 }
 
-if (navigator.userAgent.match(/iPhone/i)) {
-	//code for iPhone here
-}
+// Меню бургер
+const iconMenu = document.querySelector(".menu__icon");
+const menuBody = document.querySelector(".menu__body");
 
-if (navigator.userAgent.match(/Android/i)) {
-	//code for Android here
-}
-
-if (navigator.userAgent.match(/BlackBerry/i)) {
-	//code for BlackBerry here
-}
-
-if (navigator.userAgent.match(/webOS/i)) {
-	//code for webOS here
+if (iconMenu) {
+	iconMenu.addEventListener("click", (e) => {
+		document.body.classList.toggle("_lock");
+		iconMenu.classList.toggle("_active");
+		menuBody.classList.toggle("_active");
+	});
 }
 
 // Прокрутка при клике
-
 const menuLinks = document.querySelectorAll(".menu__link[data-goto]");
 
 if (menuLinks.length > 0) {
@@ -34,6 +43,12 @@ if (menuLinks.length > 0) {
 		if (menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)) {
 			const gotoBlock = document.querySelector(menuLink.dataset.goto);
 			const gotoBlockValue = gotoBlock.getBoundingClientRect().top + pageYOffset - document.querySelector("header").offsetHeight;
+
+			if (iconMenu.classList.contains("_active")) {
+				document.body.classList.remove("_lock");
+				iconMenu.classList.remove("_active");
+				menuBody.classList.remove("_active");
+			}
 
 			window.scrollTo({
 				top: gotoBlockValue,
